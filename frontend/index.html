@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalScan - Medical Scan Analysis</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- PDF Lib -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="brand-section">
+            <div class="logo-icon">🩺</div>
+            <div>
+                <div class="brand-title">VitalScan</div>
+                <div style="font-size: 0.8rem; font-weight: 400; opacity: 0.9;">Intelligent Medical Scan Analysis</div>
+            </div>
+        </div>
+        <div class="header-status" id="status-indicator">
+            <div class="status-dot"></div>
+            <span class="status-text">Connecting...</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <div class="nav-tab active" data-tab="scan-tab">
+                <span>📁</span> Upload Scan
+            </div>
+            <div class="nav-tab" data-tab="results-tab">
+                <span>📊</span> Analysis Results
+            </div>
+            <div class="nav-tab" data-tab="report-tab">
+                <span>📄</span> Medical Report
+            </div>
+        </nav>
+
+        <!-- Tab 1: Upload (Default) -->
+        <section id="scan-tab" class="tab-pane active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Medical Document Intake</div>
+                </div>
+                <div class="card-body">
+
+                    <div class="upload-area" id="drop-zone">
+                        <div class="upload-icon-wrapper">
+                            <span>☁️</span>
+                        </div>
+                        <h3 class="upload-title">Drop Medical Case Sheet</h3>
+                        <p class="upload-subtitle">Drag and drop or click to select • JPG, PNG, PDF • Max 10MB</p>
+
+                        <input type="file" id="file-input" hidden accept="image/*">
+                        <button class="btn-primary" onclick="document.getElementById('file-input').click()">
+                            Select Document
+                        </button>
+
+                        <div style="margin-top: 2rem;">
+                            <label for="scan-type" class="input-label"
+                                style="display:inline-block; margin-right:10px;">Document Type:</label>
+                            <select id="scan-type" class="input-field" style="width: auto; display:inline-block;">
+                                <option value="">Auto-Detect</option>
+                                <option value="breast_ultrasound">Breast Ultrasound</option>
+                                <option value="pcos_ultrasound">PCOS Ultrasound</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Results & Review -->
+        <section id="results-tab" class="tab-pane">
+
+            <div class="analysis-grid">
+                <!-- Left: Preview -->
+                <div class="preview-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <img id="scan-preview" src="" alt="Scan Preview">
+                            <div class="detected-badge" id="detected-type-badge">UNKNOWN SCAN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Data Extraction Form -->
+                <div class="data-extractor">
+
+                    <!-- Alert/Notice -->
+                    <div
+                        style="background: #fffbeb; color: #b45309; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; border: 1px solid #fcd34d; font-size: 0.9rem;">
+                        <strong>⚠️ Manual Review Required:</strong> Verify the extracted values below before proceeding
+                        to report generation.
+                    </div>
+
+                    <!-- Extraction Sections -->
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <span>🔍 AI Classification</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="results-row">
+                                <div class="input-group">
+                                    <label class="input-label">Classification</label>
+                                    <input type="text" class="input-field" id="res-classification" readonly>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">Confidence Score</label>
+                                    <input type="text" class="input-field" id="res-confidence" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <span>📋 Key Findings</span>
+                        </div>
+                        <div class="form-section-body">
+                            <ul id="res-findings-list" style="padding-left: 1.5rem; color: var(--text-main);">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bottom Action Bar (Navy Blue) -->
+            <div class="action-bar">
+                <div class="action-text">
+                    <h4>Ready to Proceed?</h4>
+                    <p>Review all values above and click "Generate Report" to finalize.</p>
+                </div>
+                <div class="actions">
+                    <button class="btn-ghost" id="btn-back-upload">← Re-Upload</button>
+                    <button class="btn-gold" id="btn-generate-report">⚡ Generate Report</button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Tab 3: Final Report -->
+        <section id="report-tab" class="tab-pane">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Final Medical Assessment</div>
+                    <button class="btn-primary" id="btn-download-pdf">Download PDF</button>
+                </div>
+                <div class="card-body" style="background: #525659; padding: 2rem;">
+
+                    <!-- Paper Representation -->
+                    <div id="report-content" class="report-paper">
+                        <div class="report-header">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-navy);">VitalScan
+                            </div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">Intelligent Medical Scan Analysis
+                            </div>
+                        </div>
+                        <div class="report-meta">
+                            <div><strong>Date:</strong> <span id="rep-date">--</span></div>
+                            <div><strong>ID:</strong> <span id="rep-patient-id">--</span></div>
+                            <div><strong>Ref:</strong> <span id="rep-scan-type">--</span></div>
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h3>Assessment Summary</h3>
+                        <p id="rep-narrative" style="margin-bottom: 1rem;"></p>
+
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #f8fafc; padding: 1.5rem; border-radius: 8px;">
+                            <div>
+                                <div class="input-label">Findings</div>
+                                <ul id="rep-findings-list" style="padding-left: 1rem;"></ul>
+                            </div>
+                            <div>
+                                <div class="input-label">Classification</div>
+                                <div id="rep-classification"
+                                    style="font-weight: bold; margin-bottom: 1rem; color: var(--primary-navy);">--
+                                </div>
+
+                                <div class="input-label">Confidence</div>
+                                <div id="rep-confidence">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h3>Recommendations</h3>
+                        <ul id="rep-recommendations-list" style="padding-left: 1.5rem;"></ul>
+                    </div>
+
+                    <div class="report-section"
+                        style="margin-top: 4rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                        <p style="font-size: 0.8rem; color: #999;">
+                            <strong>Disclaimer:</strong> <span id="rep-disclaimer">This analysis is generated by AI
+                                (GPT-4o Vision) for educational purposes. It is not a substitute for professional
+                                medical advice, diagnosis, or treatment. Always seek the advice of your physician or
+                                other qualified health provider.</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+    </section>
+
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="hidden">
+        <div class="loader"></div>
+        <div class="loading-text" style="font-weight: 600; color: var(--primary-navy);">Analyzing Scan...</div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
