@@ -181,12 +181,6 @@ pipeline2/
 
 ---
 
-## 🎯 For Imagine Cup Demo
 
-1. Start the server: `python main.py`
-2. Open Swagger UI: `http://localhost:8000/docs`
-3. Upload a medical scan image
-4. Show the AI analysis results
-5. Generate a full medical report
 
-**Good luck with your submission!** 🏆
+
