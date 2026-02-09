@@ -822,48 +822,6 @@ timeline
 
 ---
 
-## 👥 Team
-
-```mermaid
-graph TB
-    subgraph TEAM["SwasthID Team"]
-        UDITA["👩‍💻 Udita Uniyal\nCo-founder & Product Lead\nB.Tech CS, Banasthali"]
-        UDAYAN["👨‍💻 Udayan Pawar\nCo-founder & Tech Lead\nB.Tech CS, Manipal"]
-    end
-    
-    subgraph STORY["Why We're Building This"]
-        PAIN["😰 6+ Hospitalizations\n50+ pages every visit\nNo doctor sees full picture"]
-        SOLUTION["💡 Became the solution\nto the problem we lived"]
-    end
-    
-    UDITA --> PAIN --> SOLUTION
-    UDAYAN --> SOLUTION
-    
-    style UDITA fill:#e91e63,color:#fff
-    style UDAYAN fill:#2196f3,color:#fff
-    style SOLUTION fill:#4caf50,color:#fff
-```
-
-<table>
-  <tr>
-    <td align="center">
-      <strong>Udita Uniyal</strong><br/>
-      <em>Co-founder & Product Lead</em><br/>
-      B.Tech CS, Banasthali Vidyapith<br/>
-      <a href="https://github.com/uditauniyal">GitHub</a> • 
-      <a href="https://linkedin.com/in/udita-uniyal-66aa42245">LinkedIn</a>
-    </td>
-    <td align="center">
-      <strong>Udayan Pawar</strong><br/>
-      <em>Co-founder & Tech Lead</em><br/>
-      B.Tech CS, Manipal University Jaipur<br/>
-      <a href="https://github.com/udayanpawar">GitHub</a> • 
-      <a href="https://udayanpawar.com">Portfolio</a>
-    </td>
-  </tr>
-</table>
-
----
 
 ## ⚖️ License & Disclaimer
 
@@ -887,25 +845,7 @@ Always consult qualified healthcare professionals for medical advice.
 
 ---
 
-## 🏆 Imagine Cup 2026
 
-This project is a submission for **Microsoft Imagine Cup 2026 — Healthcare Track**.
-
-```mermaid
-graph LR
-    IC["🏆 Imagine Cup 2026"]
-    TRACK["🏥 Healthcare Track"]
-    PRIZE["💰 $50,000 Prize"]
-    
-    IC --> TRACK --> PRIZE
-    
-    style IC fill:#FFB900,color:#000
-    style PRIZE fill:#4caf50,color:#fff
-```
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Microsoft-Imagine_Cup_2026-FFB900?style=for-the-badge&logo=microsoft&logoColor=white"/>
-</p>
 
 ---
 
